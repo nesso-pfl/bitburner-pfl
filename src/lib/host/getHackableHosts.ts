@@ -5,7 +5,7 @@ export const getHackableHosts = (ns: NS) => {
     const server = ns.getServer(host);
     const homeFiles = ns.ls("home");
 
-    const isHigherLevel = ns.getPlayer().skills.hacking >= (server.requiredHackingSkill ?? 0);
+    const isHigherLevel = ns.getHackingLevel() >= (server.requiredHackingSkill ?? 0);
     const openableCount =
       (server.openPortCount ?? 0) +
       [
