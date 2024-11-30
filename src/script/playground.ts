@@ -1,5 +1,5 @@
-import { getAllHosts } from "/lib/host/getAllHosts";
+import { getHackableHosts } from "/lib/host/getHackableHosts";
 
 export async function main(ns: NS): Promise<void> {
-  ns.tprint(getAllHosts(ns));
+  ns.tprint(getHackableHosts(ns));
 }
