@@ -1,10 +1,5 @@
-import { NS } from "@ns";
+import { getAllHosts } from "/lib/host/getAllHosts";
 
 export async function main(ns: NS): Promise<void> {
-  const hosts = ns.scan("home");
-  const a = hosts.map((host) => {
-    const b = ns.scan(host).filter((host) => host !== "home");
-    return [host, ...b];
-  });
-  ns.tprint(a);
+  ns.tprint(getAllHosts(ns));
 }
