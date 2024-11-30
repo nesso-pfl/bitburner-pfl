@@ -18,13 +18,13 @@
   },
   "homepage": "https://github.com/bitburner-official/vscode-template#readme",
   "devDependencies": {
+    "@eslint/js": "^9.16.0",
     "@types/lodash": "^4.14.178",
     "@types/node": "^16.4.3",
-    "@typescript-eslint/eslint-plugin": "^4.28.4",
-    "@typescript-eslint/parser": "^4.28.4",
-    "eslint": "^7.31.0",
+    "eslint": "^9.16.0",
     "prettier": "^3.4.1",
     "ts-node": "^9.1.1",
-    "typescript": "^4.3.5"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.16.0"
   }
 }
