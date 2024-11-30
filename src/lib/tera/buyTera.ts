@@ -23,7 +23,8 @@ export const buyTera = async (ns: NS) => {
 
   if (shouldPurcaseTera || shouldUpgradeTeras.length) {
     ns.toast(
-      `${shouldPurcaseTera ? purchaseMessage(`tera${ownedTera.length}`) : ""}${shouldUpgradeTeras.length ? upgradeMessage(shouldUpgradeTeras) : ""}`,
+      `${shouldPurcaseTera ? purchaseMessage(`tera${ownedTera.length}`) : ""}
+${shouldUpgradeTeras.length ? upgradeMessage(shouldUpgradeTeras) : ""}`,
       "info",
       2000,
     );
