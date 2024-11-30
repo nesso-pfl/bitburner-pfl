@@ -12,12 +12,12 @@ export const buyTera = async (ns: NS) => {
     ns.purchaseServer(`tera${ownedTera.length}`, INITIAL_PURCASE_RAM);
   }
 
-  const shouldUpgradeTeras = ownedTera.reduce<string[]>((prev, acc) => {
-    const upgradeCost = [...prev, acc].reduce(
-      (prev_, acc_) => prev_ + ns.getPurchasedServerUpgradeCost(acc_, ns.getServerMaxRam(acc_) * 2),
+  const shouldUpgradeTeras = ownedTera.reduce<string[]>((prev, cur) => {
+    const upgradeCost = [...prev, cur].reduce(
+      (prev_, cur_) => prev_ + ns.getPurchasedServerUpgradeCost(cur_, ns.getServerMaxRam(cur_) * 2),
       0,
     );
-    return ns.getServerMoneyAvailable("home") * PURCHASE_LATE > upgradeCost ? [...prev, acc] : prev;
+    return ns.getServerMoneyAvailable("home") * PURCHASE_LATE > upgradeCost ? [...prev, cur] : prev;
   }, []);
   shouldUpgradeTeras.forEach((server) => ns.upgradePurchasedServer(server, ns.getServerMaxRam(server) * 2));
 
