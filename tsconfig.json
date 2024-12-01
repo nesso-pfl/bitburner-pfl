@@ -15,8 +15,7 @@
     "outDir": "dist/",
     "baseUrl": "src/",
     "paths": {
-      "/*": ["*", "../MyTypeDef.d.ts"],
-      "@ns": ["../NetscriptDefinitions.d.ts"]
+      "/*": ["./src/*", "../MyTypeDef.d.ts"]
     }
   }
 }
