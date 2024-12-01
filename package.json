@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "npx tsc -w",
+    "watch:tsc": "npx tsc -w",
+    "watch:typedpath": "bun typedPath.ts",
+    "watch": "run-p watch:*",
     "lint": "eslint . --ext .ts",
     "defs": "node ./updateDefs.js"
   },
@@ -22,6 +24,7 @@
     "@types/lodash": "^4.14.178",
     "@types/node": "^16.4.3",
     "eslint": "^9.16.0",
+    "npm-run-all2": "^7.0.1",
     "prettier": "^3.4.1",
     "ts-node": "^9.1.1",
     "typescript": "^5.7.2",
