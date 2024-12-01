@@ -13,7 +13,6 @@
     "strict": true,
     "rootDir": "src/",
     "outDir": "dist/",
-    "baseUrl": "src/",
     "paths": {
       "/*": ["./src/*", "../MyTypeDef.d.ts"]
     }
