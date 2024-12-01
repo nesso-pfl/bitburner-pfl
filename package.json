@@ -21,8 +21,9 @@
   "homepage": "https://github.com/bitburner-official/vscode-template#readme",
   "devDependencies": {
     "@eslint/js": "^9.16.0",
+    "@types/bun": "^1.1.14",
     "@types/lodash": "^4.14.178",
-    "@types/node": "^16.4.3",
+    "@types/node": "^22.10.1",
     "eslint": "^9.16.0",
     "npm-run-all2": "^7.0.1",
     "prettier": "^3.4.1",
