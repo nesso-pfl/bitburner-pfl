@@ -12,7 +12,7 @@ export const buyTera = async (ns: NS) => {
     ns.purchaseServer(`tera${ownedTera.length}`, INITIAL_PURCASE_RAM);
   }
 
-  const shouldUpgradeTeras = ownedTera.reduce<string[]>((prev, cur) => {
+  const shouldUpgradeTeras = ownedTera.reduce<Tera[]>((prev, cur) => {
     const upgradeCost = [...prev, cur].reduce(
       (prev_, cur_) => prev_ + ns.getPurchasedServerUpgradeCost(cur_, ns.getServerMaxRam(cur_) * 2),
       0,

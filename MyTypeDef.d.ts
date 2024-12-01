@@ -69,3 +69,5 @@ type Host =
   | "ecorp"
   | "megacorp"
   | "fulcrumassets";
+
+type Tera = `tera${number}`;
