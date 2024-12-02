@@ -1,5 +1,3 @@
-import { repeat } from "/util/repeat";
-
 // 1. weaken を４つに分けて配置
 // 2. secLevel が min になるまで weaken を繰り返す
 // 3. grow を４つに分けて配置
@@ -16,17 +14,20 @@ import { repeat } from "/util/repeat";
 // hack, grow, weaken を同時に行うので、hack が連続する期間が初期に発生し、それにより availableMoney が低下する恐れがある
 // hack の頻度によってその host で稼げる money は上下するし、それによって grow, weaken の頻度も変わる
 export const earnMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<void> => {
-  await ns.weaken(host, {
-    threads: requiredWeakenThreads(ns, host, ns.getServerSecurityLevel(host) - ns.getServerMinSecurityLevel(host)),
-  });
+  ns.tprint("start");
+  // await ns.weaken(host, {
+  // threads: requiredWeakenThreads(ns, host, ns.getServerSecurityLevel(host) - ns.getServerMinSecurityLevel(host)),
+  // });
 
+  ns.tprint("start1");
   const growThreads = requiredGrowThreads(ns, host);
   const increasedSecLevel = ns.growthAnalyzeSecurity(growThreads, host);
   await Promise.all([
-    await ns.grow(host, { threads: requiredGrowThreads(ns, host) }),
-    await ns.weaken(host, { threads: requiredWeakenThreads(ns, host, increasedSecLevel) }),
+    ns.grow(host, { threads: requiredGrowThreads(ns, host) }),
+    ns.weaken(host, { threads: requiredWeakenThreads(ns, host, increasedSecLevel) }),
   ]);
 
+  ns.tprint("start2");
   const {
     hackThreads,
     growThreads: growThreads_,
@@ -34,6 +35,14 @@ export const earnMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<
     growFrequency,
     weakenFrequency,
   } = calcThreads(ns, host, ns.getServerMaxRam(from));
+  ns.tprint({
+    hackThreads,
+    growThreads: growThreads_,
+    weakenThreads,
+    growFrequency,
+    weakenFrequency,
+  });
+  /*
   const hack = (delay: number) => async () => {
     if (delay > 0) await ns.sleep(delay);
     await repeat(ns, async () => await ns.hack(host, { threads: hackThreads }), 0);
@@ -52,10 +61,13 @@ export const earnMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<
     ...[...new Array(growFrequency).keys()].map((i) => grow((ns.getHackTime(host) * (i + 1)) / growFrequency)),
     ...[...new Array(weakenFrequency).keys()].map((i) => weaken((ns.getHackTime(host) * (i + 1)) / weakenFrequency)),
   ]);
+  */
 };
 
 const requiredWeakenThreads = (ns: NS, host: Host, shouldWeakenAmount: number, threads = 1): number => {
-  return shouldWeakenAmount > ns.weakenAnalyze(threads) ? requiredWeakenThreads(ns, host, threads + 1) : threads;
+  return shouldWeakenAmount > ns.weakenAnalyze(threads)
+    ? requiredWeakenThreads(ns, host, shouldWeakenAmount, threads + 1)
+    : threads;
 };
 
 const requiredGrowThreads = (ns: NS, host: Host): number => {
