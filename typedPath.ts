@@ -1,7 +1,6 @@
 import { watch, readdirSync, Dirent, writeFileSync } from "fs";
 
-const filePath = "src/lib/typedPath.ts";
-console.log("hai");
+const filePath = "src/util/typedPath.ts";
 
 watch("./src", { recursive: true }, (_, filename) => {
   if (filename === "/lib/typedPath.ts") return;
@@ -13,8 +12,8 @@ watch("./src", { recursive: true }, (_, filename) => {
 
 const getAllFiles = (dirPath = "src", indent = "  ") => {
   const head = dirPath === "src" ? "export const filePath = {" : `${dirPath.split("/").at(-1)}: {`;
-  const files = readdirSync(dirPath, { withFileTypes: true, recursive: true })
-    .sort((a, b) => (a.name > b.name ? 1 : -1))
+  const files = readdirSync(dirPath, { withFileTypes: true })
+    .toSorted((a, b) => (a.name > b.name ? 1 : -1))
     .flatMap((dirEnt) => showFile(dirEnt, dirPath, indent));
 
   return `${indent.slice(2)}${head}

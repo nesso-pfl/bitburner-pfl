@@ -3,3 +3,4 @@ dist/
 NetscriptDefinitions.d.ts
 .vscode/settings.json
 src/script/playground.ts
+src/util/typedPath.ts
