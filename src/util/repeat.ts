@@ -1,6 +1,14 @@
-export const repeat = async (ns: NS, fn: () => unknown, duration: number, count?: number) => {
+type Option = Partial<{
+  count: number;
+  until: (ns: NS) => boolean;
+}>;
+
+export const repeat = async (ns: NS, fn: () => unknown, duration: number, option?: Option) => {
   await fn();
-  if (count === 1) return;
+  if (option?.count === 1 || option?.until?.(ns)) return;
   await ns.sleep(duration);
-  await repeat(ns, fn, duration, count === undefined ? count : count - 1);
+  await repeat(ns, fn, duration, {
+    count: option?.count === undefined ? option?.count : option.count - 1,
+    until: option?.until,
+  });
 };
