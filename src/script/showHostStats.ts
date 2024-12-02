@@ -8,7 +8,8 @@ export async function main(ns: NS): Promise<void> {
     .map((stat) => ({
       name: stat.hostname,
       money: (((stat.moneyAvailable ?? 0) / (stat.moneyMax ?? Infinity)) * 100).toFixed(2) + "%",
+      maxMoney: stat.moneyMax ?? Infinity,
       secLv: ((stat.hackDifficulty ?? 0) - (stat.minDifficulty ?? 0)).toFixed(2),
     }));
-  tprintTable(ns, data, ["name", "money", "secLv"]);
+  tprintTable(ns, data, ["name", "maxMoney", "money", "secLv"]);
 }
