@@ -23,6 +23,7 @@ declare global {
     hackAnalyzeChance(host: Host): number;
     hackAnalyzeThreads(host: Host, hackAmount: number): number;
     ls(host: Host | Tera, substring?: string): string[];
+    ps(host?: Host | Tera): bitburner.ProcessInfo[];
     purchaseServer(hostname: Tera, ram: number): Tera;
     scan(host?: Host | Tera): (Host | Tera)[];
     scp(files: string | string[], destination: Host | Tera, source?: Host | Tera): boolean;
