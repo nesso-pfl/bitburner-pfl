@@ -1,3 +1,4 @@
 alias p="run script/playground.js"
 alias h="run script/showHostStats.js"
 alias t="run script/showTeraStats.js"
+alias d="run script/daemons.js"
