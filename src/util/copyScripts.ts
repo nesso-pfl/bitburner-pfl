@@ -4,5 +4,4 @@ export const copyScripts = (ns: NS, dest: Host | Tera) => {
     dest,
     "home",
   );
-  ns.tprint('Copied scripts to "' + dest + '"');
 };
