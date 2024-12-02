@@ -10,6 +10,7 @@ export async function main(ns: NS): Promise<void> {
       money: (((stat.moneyAvailable ?? 0) / (stat.moneyMax ?? Infinity)) * 100).toFixed(2) + "%",
       maxMoney: stat.moneyMax ?? Infinity,
       secLv: ((stat.hackDifficulty ?? 0) - (stat.minDifficulty ?? 0)).toFixed(2),
+      admin: stat.hasAdminRights ? "o" : "x",
     }));
-  tprintTable(ns, data, ["name", "maxMoney", "money", "secLv"]);
+  tprintTable(ns, data, ["name", "maxMoney", "money", "secLv", "admin"]);
 }
