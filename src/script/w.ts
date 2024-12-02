@@ -13,13 +13,10 @@ export async function main(ns: NS): Promise<void> {
   await repeat(ns, () => {}, 50, { until: (ns) => !ns.isRunning(pid) });
   ns.writePort(hackPort, "Weakened");
   ns.writePort(growPort, "Weakened");
-  ns.tprint("w write");
-  ns.tprint("w wait");
   await repeat(ns, () => {}, 50, {
     until: (ns) => !ns.getPortHandle(hackPort).empty() && !ns.getPortHandle(growPort).empty(),
   });
   ns.readPort(hackPort);
   ns.readPort(growPort);
-  ns.tprint("w read");
   await main(ns);
 }

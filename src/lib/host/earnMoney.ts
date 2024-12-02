@@ -32,7 +32,7 @@ const minimizeSecLevel = async (ns: NS, host: Host, from: Host | Tera): Promise<
 
   ns.exec(filePath.script.weaken.$path, from, weakenThreads, host);
   await ns.sleep(weakenTime);
-  ns.tprint("weaken done");
+  ns.tprint(`${host} secLevel minimized`);
 };
 
 const maximizeMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<void> => {
@@ -51,7 +51,7 @@ const maximizeMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<voi
   await repeat(ns, () => {}, 1000, {
     until: (ns) => !ns.isRunning(growPid) && !ns.isRunning(weakenPid),
   });
-  ns.tprint("grow done");
+  ns.tprint(`${host} availableMoney maximized`);
 };
 
 export const earnMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<void> => {
@@ -62,26 +62,13 @@ export const earnMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<
     hackThreads,
     growThreads: growThreads_,
     weakenThreads,
-    growFrequency,
     weakenFrequency,
-    ramCost,
-    earnRate,
   } = calcThreads(ns, host, ns.getServerMaxRam(from) - ns.getServerUsedRam(from));
-  ns.tprint({
-    hackThreads,
-    growThreads: growThreads_,
-    weakenThreads,
-    growFrequency,
-    weakenFrequency,
-    ramCost,
-    earnRate,
-  });
   const hackPort = registerPort(ns);
   if (weakenFrequency > 2) {
     await repeat(
       ns,
       () => {
-        ns.tprint("exec g w");
         const growPort = registerPort(ns);
         ns.exec(filePath.script.g.$path, from, 1, from, host, growPort, growThreads_);
         ns.exec(filePath.script.w.$path, from, 1, from, host, weakenThreads, hackPort, growPort);
@@ -91,14 +78,12 @@ export const earnMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<
     );
   }
   await ns.sleep(ns.getHackTime(host));
-  ns.tprint("exec h g w");
   const growPort = registerPort(ns);
   ns.exec(filePath.script.h.$path, from, 1, from, host, hackPort, hackThreads);
   ns.exec(filePath.script.g.$path, from, 1, from, host, growPort, growThreads_);
   ns.exec(filePath.script.w.$path, from, 1, from, host, weakenThreads, hackPort, growPort);
   if (weakenFrequency > 1) {
     await ns.sleep(ns.getHackTime(host));
-    ns.tprint("exec g w");
     const growPort = registerPort(ns);
     ns.exec(filePath.script.g.$path, from, 1, from, host, growPort, growThreads_);
     ns.exec(filePath.script.w.$path, from, 1, from, host, weakenThreads, hackPort, growPort);
