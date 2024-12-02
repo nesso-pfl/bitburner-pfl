@@ -3,6 +3,7 @@ export const getTeraStats = (ns: NS) => {
     return {
       name: tera,
       maxRam: ns.getServerMaxRam(tera),
+      usedRam: ns.getServerUsedRam(tera),
     };
   });
 };
