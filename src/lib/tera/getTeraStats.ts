@@ -4,6 +4,7 @@ export const getTeraStats = (ns: NS) => {
       name: tera,
       maxRam: ns.getServerMaxRam(tera),
       usedRam: ns.getServerUsedRam(tera),
+      upgradeCost: ns.getPurchasedServerUpgradeCost(tera, ns.getServerMaxRam(tera) * 2),
     };
   });
 };
