@@ -18,6 +18,7 @@ declare global {
     grow(host: Host, opts?: bitburner.BasicHGWOptions): Promise<number>;
     growthAnalyze(host: Host, multiplier: number, cores?: number): number;
     growthAnalyzeSecurity(threads: number, hostname?: Host, cores?: number): number;
+    hack(host: Host, opts?: bitburner.BasicHGWOptions): Promise<number>;
     hackAnalyze(host: Host): number;
     hackAnalyzeChance(host: Host): number;
     hackAnalyzeThreads(host: Host, hackAmount: number): number;
