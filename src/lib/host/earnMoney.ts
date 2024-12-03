@@ -94,7 +94,15 @@ const easyHack = async (ns: NS, host: Host, from: Host | Tera) => {
     growThreads: growThreads_,
     weakenThreads,
     weakenFrequency,
-  } = calcThreads(ns, host, ns.getServerMaxRam(from) - ns.getServerUsedRam(from));
+    ramCost,
+  } = calcThreads(ns, host, ns.getServerMaxRam(from) - ns.getServerUsedRam(from) * 0.9);
+  ns.tprint({
+    hackThreads,
+    growThreads: growThreads_,
+    weakenThreads,
+    weakenFrequency,
+    ramCost,
+  });
   ns.exec(filePath.script.hackDaemon.$path, from, hackThreads, host);
   await ns.sleep(10);
   await repeat(
@@ -149,9 +157,9 @@ const calcThreads = (
   const growThreads = Math.ceil(ns.growthAnalyze(host, 1 / (1 - earnRate)));
   const weakenThreads = growThreads > 20 ? Math.ceil(growThreads / 10) : 20;
   const ramCost =
-    hackThreads * ns.getScriptRam(filePath.script.hack.$path) +
-    growFrequency * growThreads * ns.getScriptRam(filePath.script.grow.$path) +
-    weakenFrequency * weakenThreads * ns.getScriptRam(filePath.script.weaken.$path);
+    hackThreads * ns.getScriptRam(filePath.script.hackDaemon.$path) +
+    growFrequency * growThreads * ns.getScriptRam(filePath.script.growDaemon.$path) +
+    weakenFrequency * weakenThreads * ns.getScriptRam(filePath.script.weakenDaemon.$path);
   return ramCost >
     availableRam -
       ns.getScriptRam(filePath.script.h.$path) -
