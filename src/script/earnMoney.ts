@@ -4,6 +4,10 @@ import { arg } from "/util/arg";
 
 export async function main(ns: NS): Promise<void> {
   const host = toHost(arg(ns.args[0], "string"));
-  const teraIndex = arg(ns.args[1], "number");
-  await earnMoney(ns, host, `tera${teraIndex}`);
+  if (ns.args[1] === "home") {
+    await earnMoney(ns, host, "home");
+  } else {
+    const teraIndex = arg(ns.args[1], "number");
+    await earnMoney(ns, host, `tera${teraIndex}`);
+  }
 }
