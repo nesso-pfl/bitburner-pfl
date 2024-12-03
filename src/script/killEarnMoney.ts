@@ -15,7 +15,10 @@ export async function main(ns: NS): Promise<void> {
           (process.filename === filePath.script.w.$path && process.args[1] === host) ||
           (process.filename === filePath.script.hack.$path && process.args[0] === host) ||
           (process.filename === filePath.script.grow.$path && process.args[0] === host) ||
-          (process.filename === filePath.script.weaken.$path && process.args[0] === host),
+          (process.filename === filePath.script.weaken.$path && process.args[0] === host) ||
+          (process.filename === filePath.script.hackDaemon.$path && process.args[0] === host) ||
+          (process.filename === filePath.script.growDaemon.$path && process.args[0] === host) ||
+          (process.filename === filePath.script.weakenDaemon.$path && process.args[0] === host),
       )
       .forEach((process) => ns.kill(process.pid));
   });
