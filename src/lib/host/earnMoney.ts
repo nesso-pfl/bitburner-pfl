@@ -28,7 +28,10 @@ const minimizeSecLevel = async (ns: NS, host: Host, from: Host | Tera): Promise<
     ns.getServerSecurityLevel(host) - ns.getServerMinSecurityLevel(host),
   );
   const weakenCost = ns.getScriptRam(filePath.script.weaken.$path, from) * weakenThreads;
-  if (weakenCost > ns.getServerMaxRam(from) - ns.getServerUsedRam(from)) throw new Error("Not enough ram");
+  if (weakenCost > ns.getServerMaxRam(from) - ns.getServerUsedRam(from))
+    throw new Error(
+      `Not enough ram. ramCost: ${weakenCost}, availableRam: ${ns.getServerMaxRam(from) - ns.getServerUsedRam(from)}`,
+    );
 
   ns.exec(filePath.script.weaken.$path, from, weakenThreads, host);
   await ns.sleep(weakenTime);
@@ -38,16 +41,16 @@ const minimizeSecLevel = async (ns: NS, host: Host, from: Host | Tera): Promise<
 const maximizeMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<void> => {
   if (ns.getServerMoneyAvailable(host) === ns.getServerMaxMoney(host)) return;
 
-  const growThreads = requiredGrowThreads(ns, host, (ns.getServerMaxRam(from) - ns.getServerUsedRam(from)) * 0.9);
-  const increasedSecLevel = Math.ceil(ns.growthAnalyzeSecurity(growThreads, host));
-  const growPid = ns.exec(filePath.script.growDaemon.$path, from, growThreads, host, true);
-  const weakenPid = ns.exec(
-    filePath.script.weakenDaemon.$path,
-    from,
-    requiredWeakenThreads(ns, host, increasedSecLevel),
-    host,
-    true,
+  const availableRam = ns.getServerMaxRam(from) - ns.getServerUsedRam(from);
+  // TODO: grow, weaken の threads の最適化
+  const growThreads = requiredGrowThreads(ns, host, availableRam * 0.8);
+  // const weakenThreads = requiredWeakenThreads(ns, host, Math.ceil(ns.growthAnalyzeSecurity(growThreads, host)));
+  const weakenThreads = Math.floor(
+    (availableRam - ns.getScriptRam(filePath.script.growDaemon.$path) * growThreads) /
+      ns.getScriptRam(filePath.script.weakenDaemon.$path),
   );
+  const growPid = ns.exec(filePath.script.growDaemon.$path, from, growThreads, host, true);
+  const weakenPid = ns.exec(filePath.script.weakenDaemon.$path, from, weakenThreads, host, true, growPid);
   await repeat(ns, () => {}, 1000, {
     until: (ns) => !ns.isRunning(growPid) && !ns.isRunning(weakenPid),
   });
@@ -97,12 +100,19 @@ const easyHack = async (ns: NS, host: Host, from: Host | Tera) => {
     ramCost,
   } = calcThreads(ns, host, ns.getServerMaxRam(from) - ns.getServerUsedRam(from) * 0.9);
   ns.tprint({
+    host,
+    from,
     hackThreads,
     growThreads: growThreads_,
     weakenThreads,
     weakenFrequency,
     ramCost,
   });
+  if (ramCost > ns.getServerMaxRam(from) - ns.getServerUsedRam(from)) {
+    throw new Error(
+      `Not enough ram. ramCost: ${ramCost}, availableRam: ${ns.getServerMaxRam(from) - ns.getServerUsedRam(from)}`,
+    );
+  }
   ns.exec(filePath.script.hackDaemon.$path, from, hackThreads, host);
   await ns.sleep(10);
   await repeat(
