@@ -54,10 +54,8 @@ const maximizeMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<voi
   ns.tprint(`${host} availableMoney maximized`);
 };
 
-export const earnMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<void> => {
-  await minimizeSecLevel(ns, host, from);
-  await maximizeMoney(ns, host, from);
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const gracefulHack = async (ns: NS, host: Host, from: Host | Tera) => {
   const {
     hackThreads,
     growThreads: growThreads_,
@@ -88,6 +86,33 @@ export const earnMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<
     ns.exec(filePath.script.g.$path, from, 1, from, host, growPort, growThreads_);
     ns.exec(filePath.script.w.$path, from, 1, from, host, weakenThreads, hackPort, growPort);
   }
+};
+
+const easyHack = async (ns: NS, host: Host, from: Host | Tera) => {
+  const {
+    hackThreads,
+    growThreads: growThreads_,
+    weakenThreads,
+    weakenFrequency,
+  } = calcThreads(ns, host, ns.getServerMaxRam(from) - ns.getServerUsedRam(from));
+  ns.exec(filePath.script.hackDaemon.$path, from, hackThreads, host);
+  await ns.sleep(10);
+  await repeat(
+    ns,
+    async () => {
+      ns.exec(filePath.script.growDaemon.$path, from, growThreads_, host);
+      await ns.sleep(10);
+      ns.exec(filePath.script.weakenDaemon.$path, from, weakenThreads, host);
+    },
+    ns.getHackTime(host),
+    { count: weakenFrequency },
+  );
+};
+
+export const earnMoney = async (ns: NS, host: Host, from: Host | Tera): Promise<void> => {
+  await minimizeSecLevel(ns, host, from);
+  await maximizeMoney(ns, host, from);
+  await easyHack(ns, host, from);
 };
 
 const requiredWeakenThreads = (ns: NS, host: Host, shouldWeakenAmount: number, threads = 1): number => {
