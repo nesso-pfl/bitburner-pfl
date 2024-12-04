@@ -19,7 +19,7 @@ export const maximizeMoney = async (ns: NS, host: Host): Promise<void> => {
 
 const calcThreadsAndServerForGrowAndWeaken = (ns: NS, host: Host, count = 1) => {
   const growMultiplier = Math.pow(ns.getServerMaxMoney(host) / ns.getServerMoneyAvailable(host), 1 / count);
-  const growThreads = ns.growthAnalyze(host, growMultiplier);
+  const growThreads = Math.ceil(ns.growthAnalyze(host, growMultiplier));
   const growCost = growThreads * ns.getScriptRam(filePath.script.growDaemon.$path);
   const { server: growServer, hackableServers: newHackableServers } = findMinRamServer(hackableServers(ns), growCost);
   if (growServer === undefined) return calcThreadsAndServerForGrowAndWeaken(ns, host, count + 1);
