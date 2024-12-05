@@ -21,6 +21,7 @@ declare global {
     hack(host: Host, opts?: bitburner.BasicHGWOptions): Promise<number>;
     hackAnalyze(host: Host): number;
     hackAnalyzeChance(host: Host): number;
+    hackAnalyzeSecurity(threads: number, hostname?: Host): number;
     hackAnalyzeThreads(host: Host, hackAmount: number): number;
     ls(host: Host | Tera, substring?: string): string[];
     ps(host?: Host | Tera): bitburner.ProcessInfo[];
