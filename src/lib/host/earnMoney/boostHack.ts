@@ -28,7 +28,7 @@ export const boostHack = async (ns: NS, host: Host, hackStrategy: HackStrategy) 
         hackThreads * ns.getScriptRam(filePath.script.hack.$path),
       );
       if (!hackServer) throw new Error("No server found to hack");
-      const hackDelay = ns.getGrowTime(host) - ns.getHackTime(host) - 100;
+      const hackDelay = ns.getWeakenTime(host) - ns.getHackTime(host) - 200;
       ns.exec(filePath.script.hack.$path, hackServer.name, hackThreads, host, hackDelay);
     },
     duration,
