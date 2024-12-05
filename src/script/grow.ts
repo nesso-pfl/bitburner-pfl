@@ -6,4 +6,5 @@ export async function main(ns: NS): Promise<void> {
   const delay = arg(ns.args[1], "number", 0);
   if (delay > 0) await ns.sleep(delay);
   await ns.grow(host);
+  ns.tprint(`Grown ${host}`);
 }

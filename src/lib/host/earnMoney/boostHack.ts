@@ -24,13 +24,13 @@ export const boostHack = async (ns: NS, host: Host, hackStrategy: HackStrategy) 
     weakenServers: weakenServers.map((server) => server.name),
     weakenThreads,
   });
-  const duration = ns.getHackTime(host) - 3;
+  const duration = ns.getHackTime(host) * 2 - 10;
   await repeat(
     ns,
     async () => {
-      ns.exec(filePath.script.weaken.$path, hackServer.name, hackThreads, host);
+      ns.exec(filePath.script.weaken.$path, weakenServers[0].name, weakenThreads, host);
       const growDelay = ns.getWeakenTime(host) - ns.getGrowTime(host) - 100;
-      ns.exec(filePath.script.grow.$path, hackServer.name, hackThreads, host, growDelay);
+      ns.exec(filePath.script.grow.$path, growServers[0].name, growThreads, host, growDelay);
       const hackDelay = ns.getGrowTime(host) - ns.getHackTime(host) - 100;
       ns.exec(filePath.script.hack.$path, hackServer.name, hackThreads, host, hackDelay);
     },

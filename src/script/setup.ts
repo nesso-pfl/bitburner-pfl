@@ -19,8 +19,48 @@ const a: { host: Host; from: number | "home" }[] = [
   // { host: "computek", from: 14 },
   // { host: "the-hub", from: 15 },
   // { host: "johnson-ortho", from: 16 },
+  // { host: "catalyst", from: 17 },
+  // { host: "rothman-uni", from: 18 },
+  // { host: "summit-uni", from: 19 },
+  // { host: "syscore", from: 20 },
+  // { host: "millenium-fitness", from: 21 },
+  // { host: "aevum-police", from: 22 },
+  // { host: "lexo-corp", from: 23 },
+  // { host: "rho-construction", from: 24 },
+  // { host: "alpha-ent", from: 0 },
+];
+
+const b: Host[] = [
+  // "n00dles",
+  "foodnstuff",
+  // "sigma-cosmetics",
+  // "joesguns",
+  // "hong-fang-tea",
+  // "harakiri-sushi",
+  // "iron-gym",
+  // "zer0",
+  // "nectar-net",
+  // "max-hardware",
+  // "phantasy",
+  // "omega-net",
+  // "neo-net",
+  // "silver-helix",
+  // "crush-fitness",
+  // "computek",
+  // "the-hub",
+  // "johnson-ortho",
+  // "catalyst",
+  // "rothman-uni",
+  // "summit-uni",
+  // "syscore",
+  // "millenium-fitness",
+  // "aevum-police",
+  // "lexo-corp",
+  // "rho-construction",
+  // "alpha-ent",
 ];
 
 export async function main(ns: NS): Promise<void> {
-  a.forEach(({ host, from }) => ns.exec(filePath.script.earnMoney.$path, "home", 1, host, from));
+  b.forEach((host) => ns.exec(filePath.script.earnMoney.$path, "home", 1, host));
+  // a.forEach(({ host, from }) => ns.exec(filePath.script.earnMoney.$path, "home", 1, host, from));
 }

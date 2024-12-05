@@ -1,4 +1,4 @@
-import { earnMoney } from "/lib/host/earnMoney/index";
+import { earnMoney } from "../lib/host/earnMoney";
 import { toHost } from "/lib/host/toHost";
 import { arg } from "/util/arg";
 
