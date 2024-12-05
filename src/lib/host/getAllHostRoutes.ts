@@ -9,7 +9,10 @@ export const getAllHostRoutes = (ns: NS) => {
 const getNewRoutes = (ns: NS, routes: Route[]): Route[] => {
   const allHosts = nub(routes.flat());
   const newRoutes = routes.flatMap((route) => {
-    const newRoutes_ = ns.scan(route.at(-1)).filter((host) => !allHosts.includes(host));
+    const newRoutes_ = ns
+      .scan(route.at(-1))
+      .filter((server): server is Exclude<typeof server, Tera> => !server.startsWith("tera"))
+      .filter((host) => !allHosts.includes(host));
     return newRoutes_.map((host) => [...route, host]);
   });
 
