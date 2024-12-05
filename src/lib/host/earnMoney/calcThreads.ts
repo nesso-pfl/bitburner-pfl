@@ -1,4 +1,4 @@
-import { findMinRamServer, HackableServer, hackableServers, requiredWeakenThreads } from "/lib/host/earnMoney/util";
+import { findMinRamServer, HackableServer, hackableServers } from "/lib/host/earnMoney/util";
 import { filePath } from "/util/typedPath";
 
 export type HackStrategy = {
@@ -13,18 +13,17 @@ export type HackStrategy = {
 };
 
 export const calcThreads = (ns: NS, host: Host): HackStrategy => {
-  const port = ns.getPortHandle(1);
-  const beforeData: HackStrategy[] = port.peek();
-  const startTime = performance.now();
+  const port = ns.getPortHandle(2);
+  // const beforeData: HackStrategy[] = port.peek();
+  const beforeData: HackStrategy[] = [];
   const initialHackableServers = beforeData.reduce<HackableServer[]>((acc) => {
     return acc;
   }, hackableServers(ns));
   const hackStrategy = calcThreads_(ns, host, initialHackableServers);
-  const afterData: HackStrategy[] = port.peek();
-  const endTime = performance.now();
+  // const afterData: HackStrategy[] = port.peek();
+  const afterData: HackStrategy[] = [];
   // TODO: 厳密に比較する
   if (beforeData.length !== afterData.length) return calcThreads(ns, host);
-  ns.tprint(`calcThreads for ${host}: ${endTime - startTime}ms`);
 
   port.clear();
   port.write([...afterData, hackStrategy]);
@@ -62,9 +61,10 @@ const calcThreads_ = (ns: NS, host: Host, initialHackableServers: HackableServer
   if (growResult === undefined) return calcThreads_(ns, host, initialHackableServers, earnRate - 0.01);
   const { servers: growServers, hackableServers: hackableServersAfterGrow } = growResult;
 
-  const increaseSecLevel = ns.hackAnalyzeSecurity(hackThreads, host) + ns.growthAnalyzeSecurity(growThreads, host);
+  // const increaseSecLevel = ns.hackAnalyzeSecurity(hackThreads, host) + ns.growthAnalyzeSecurity(growThreads, host);
   const weakenFrequency = Math.ceil(ns.getWeakenTime(host) / ns.getHackTime(host));
-  const weakenThreads = requiredWeakenThreads(ns, host, increaseSecLevel);
+  // const weakenThreads = requiredWeakenThreads(ns, host, increaseSecLevel);
+  const weakenThreads = Math.floor(growThreads / 4);
   const weakenResult = [...new Array(growFrequency).keys()].reduce<
     { servers: HackableServer[]; hackableServers: HackableServer[] } | undefined
   >(
