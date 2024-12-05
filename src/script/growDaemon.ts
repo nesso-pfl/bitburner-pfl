@@ -5,7 +5,15 @@ import { repeat } from "/util/repeat";
 export async function main(ns: NS): Promise<void> {
   const host = toHost(arg(ns.args[0], "string"));
   const stopOnMaxMoney = arg(ns.args[1], "boolean", false);
-  await repeat(ns, async () => await ns.grow(host), 0, {
-    until: (ns: NS) => stopOnMaxMoney && ns.getServerMoneyAvailable(host) === ns.getServerMaxMoney(host),
-  });
+  const duration = arg(ns.args[2], "number", 0);
+  await repeat(
+    ns,
+    async () => {
+      await ns.grow(host);
+    },
+    duration,
+    {
+      until: (ns: NS) => stopOnMaxMoney && ns.getServerMoneyAvailable(host) === ns.getServerMaxMoney(host),
+    },
+  );
 }
