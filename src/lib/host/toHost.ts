@@ -69,6 +69,7 @@ const hosts = [
   "ecorp",
   "megacorp",
   "fulcrumassets",
+  "w0r1d_d43m0n",
 ] satisfies Host[];
 
 export const toHost = (host: string): Host => {

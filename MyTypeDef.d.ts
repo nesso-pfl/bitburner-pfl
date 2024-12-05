@@ -68,6 +68,7 @@ type Host =
   | "The-Cave"
   | "ecorp"
   | "megacorp"
-  | "fulcrumassets";
+  | "fulcrumassets"
+  | "w0r1d_d43m0n";
 
 type Tera = `tera${number}`;
