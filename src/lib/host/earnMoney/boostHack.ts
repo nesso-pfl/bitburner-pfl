@@ -1,36 +1,33 @@
 import { HackStrategy } from "/lib/host/earnMoney/calcThreads";
+import { findMinRamServer, hackableServers } from "/lib/host/earnMoney/util";
 import { repeat } from "/util/repeat";
 import { filePath } from "/util/typedPath";
 
 export const boostHack = async (ns: NS, host: Host, hackStrategy: HackStrategy) => {
-  const {
-    hackServer,
-    hackThreads,
-    growFrequency,
-    growServers,
-    growThreads,
-    weakenFrequency,
-    weakenServers,
-    weakenThreads,
-  } = hackStrategy;
-  ns.tprint({
-    host,
-    hackServer: hackServer.name,
-    hackThreads,
-    growFrequency,
-    growServers: growServers.map((server) => server.name),
-    growThreads,
-    weakenFrequency,
-    weakenServers: weakenServers.map((server) => server.name),
-    weakenThreads,
-  });
+  const { hackThreads, growThreads, weakenThreads } = hackStrategy;
+  ns.tprint({ host, hackThreads, growThreads, weakenThreads });
   const duration = ns.getHackTime(host) * 2 - 10;
   await repeat(
     ns,
     async () => {
-      ns.exec(filePath.script.weaken.$path, weakenServers[0].name, weakenThreads, host);
+      const { server: weakenServer } = findMinRamServer(
+        hackableServers(ns),
+        weakenThreads * ns.getScriptRam(filePath.script.weaken.$path),
+      );
+      if (!weakenServer) throw new Error("No server found to weaken");
+      ns.exec(filePath.script.weaken.$path, weakenServer.name, weakenThreads, host);
+      const { server: growServer } = findMinRamServer(
+        hackableServers(ns),
+        growThreads * ns.getScriptRam(filePath.script.grow.$path),
+      );
+      if (!growServer) throw new Error("No server found to grow");
       const growDelay = ns.getWeakenTime(host) - ns.getGrowTime(host) - 100;
-      ns.exec(filePath.script.grow.$path, growServers[0].name, growThreads, host, growDelay);
+      ns.exec(filePath.script.grow.$path, growServer.name, growThreads, host, growDelay);
+      const { server: hackServer } = findMinRamServer(
+        hackableServers(ns),
+        hackThreads * ns.getScriptRam(filePath.script.hack.$path),
+      );
+      if (!hackServer) throw new Error("No server found to hack");
       const hackDelay = ns.getGrowTime(host) - ns.getHackTime(host) - 100;
       ns.exec(filePath.script.hack.$path, hackServer.name, hackThreads, host, hackDelay);
     },

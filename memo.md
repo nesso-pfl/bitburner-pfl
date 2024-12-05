@@ -1,4 +1,5 @@
 favortoRep(150): 462.490k
+462490 / 3600 = 128.46944444444444
 
 script/hackDaemon.js: Hack 632.1999999880791
 script/hackDaemon.js: Hack 689.4000000059605
