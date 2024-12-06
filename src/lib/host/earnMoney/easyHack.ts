@@ -1,6 +1,6 @@
-import { HackStrategy } from "/lib/host/earnMoney/calcThreads";
-import { repeat } from "/util/repeat";
-import { filePath } from "/util/typedPath";
+import { HackStrategy } from '/lib/host/earnMoney/calcThreads';
+import { repeat } from '/util/repeat';
+import { filePath } from '/util/typedPath';
 
 export const easyHack = async (ns: NS, host: Host, hackStrategy: HackStrategy) => {
   const {

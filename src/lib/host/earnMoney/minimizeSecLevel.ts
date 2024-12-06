@@ -1,6 +1,6 @@
-import { getMaxRamServer, findMinRamServer, hackableServers, requiredWeakenThreads } from "/lib/host/earnMoney/util";
-import { repeat } from "/util/repeat";
-import { filePath } from "/util/typedPath";
+import { getMaxRamServer, findMinRamServer, hackableServers, requiredWeakenThreads } from '/lib/host/earnMoney/util';
+import { repeat } from '/util/repeat';
+import { filePath } from '/util/typedPath';
 
 /**
  * host の secLevel を最小化する
@@ -16,7 +16,7 @@ export const minimizeSecLevel = async (ns: NS, host: Host): Promise<void> => {
     host,
     ns.getServerSecurityLevel(host) - ns.getServerMinSecurityLevel(host),
   );
-  const weakenCost = ns.getScriptRam(filePath.script.weaken.$path, "home") * maxWeakenThreads;
+  const weakenCost = ns.getScriptRam(filePath.script.weaken.$path, 'home') * maxWeakenThreads;
   const { server } = findMinRamServer(hackableServers(ns), weakenCost);
 
   if (server === undefined) {

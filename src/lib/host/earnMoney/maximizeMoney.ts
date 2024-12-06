@@ -1,6 +1,6 @@
-import { findMinRamServer, hackableServers, requiredWeakenThreads } from "/lib/host/earnMoney/util";
-import { repeat } from "/util/repeat";
-import { filePath } from "/util/typedPath";
+import { findMinRamServer, hackableServers, requiredWeakenThreads } from '/lib/host/earnMoney/util';
+import { repeat } from '/util/repeat';
+import { filePath } from '/util/typedPath';
 
 /**
  * host の availableMoney を最大化する

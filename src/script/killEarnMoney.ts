@@ -1,6 +1,6 @@
-import { getHackableHosts } from "/lib/host/getHackableHosts";
-import { getAllTeras } from "/lib/tera/getAllTeras";
-import { filePath } from "/util/typedPath";
+import { getHackableHosts } from '/lib/host/getHackableHosts';
+import { getAllTeras } from '/lib/tera/getAllTeras';
+import { filePath } from '/util/typedPath';
 
 export async function main(ns: NS): Promise<void> {
   ([...getHackableHosts(ns), ...getAllTeras(ns)] satisfies (Host | Tera)[]).forEach((server) => {

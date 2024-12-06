@@ -1,7 +1,7 @@
-import { boostHack } from "/lib/host/earnMoney/boostHack";
-import { calcThreads } from "/lib/host/earnMoney/calcThreads";
-import { maximizeMoney } from "/lib/host/earnMoney/maximizeMoney";
-import { minimizeSecLevel } from "/lib/host/earnMoney/minimizeSecLevel";
+import { boostHack } from '/lib/host/earnMoney/boostHack';
+import { calcThreads } from '/lib/host/earnMoney/calcThreads';
+import { maximizeMoney } from '/lib/host/earnMoney/maximizeMoney';
+import { minimizeSecLevel } from '/lib/host/earnMoney/minimizeSecLevel';
 // import { findMinRamServer, hackableServers } from "/lib/host/earnMoney/util";
 // import { getHostStats } from "/lib/host/getHostStats";
 // import { filePath } from "/util/typedPath";

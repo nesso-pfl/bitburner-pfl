@@ -1,5 +1,5 @@
-import { findMinRamServer, HackableServer, hackableServers } from "/lib/host/earnMoney/util";
-import { filePath } from "/util/typedPath";
+import { findMinRamServer, HackableServer, hackableServers } from '/lib/host/earnMoney/util';
+import { filePath } from '/util/typedPath';
 
 export type HackStrategy = {
   hackServer: HackableServer;

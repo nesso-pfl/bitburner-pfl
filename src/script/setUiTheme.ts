@@ -1,14 +1,14 @@
-const background = "#121421";
+const background = '#121421';
 // const darydark = "#282c44";
-const dark = "#3d415d";
+const dark = '#3d415d';
 // const lightdark = "#74778c";
-const light = "#c7c9d1";
-const purple = "#a191c9";
-const blue = "#859fc8";
+const light = '#c7c9d1';
+const purple = '#a191c9';
+const blue = '#859fc8';
 // const cyan = "#89b8c1";
-const green = "#b7c684";
-const orange = "#e3a675";
-const red = "#e27a79";
+const green = '#b7c684';
+const orange = '#e3a675';
+const red = '#e27a79';
 
 export async function main(ns: NS): Promise<void> {
   const theme = ns.ui.getTheme();

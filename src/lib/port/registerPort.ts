@@ -1,4 +1,4 @@
-import { handleMasterPort } from "/lib/port/handleMasterPort";
+import { handleMasterPort } from '/lib/port/handleMasterPort';
 
 const INITIAL_PORT = 2;
 

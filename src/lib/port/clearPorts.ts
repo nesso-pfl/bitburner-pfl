@@ -1,4 +1,4 @@
-import { handleMasterPort } from "/lib/port/handleMasterPort";
+import { handleMasterPort } from '/lib/port/handleMasterPort';
 
 export const clearPorts = (ns: NS) => {
   const masterPort = handleMasterPort(ns);

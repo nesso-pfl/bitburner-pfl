@@ -1,4 +1,4 @@
-import { handleMasterPort } from "/lib/port/handleMasterPort";
+import { handleMasterPort } from '/lib/port/handleMasterPort';
 
 export const unregisterPort = (ns: NS, port: number) => {
   ns.clearPort(port);

@@ -1,6 +1,6 @@
-import { getHackableHosts } from "/lib/host/getHackableHosts";
-import { getHostStats } from "/lib/host/getHostStats";
-import { getTeraStats } from "/lib/tera/getTeraStats";
+import { getHackableHosts } from '/lib/host/getHackableHosts';
+import { getHostStats } from '/lib/host/getHostStats';
+import { getTeraStats } from '/lib/tera/getTeraStats';
 
 export const requiredWeakenThreads = (
   ns: NS,

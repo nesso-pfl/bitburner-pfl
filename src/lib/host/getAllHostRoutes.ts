@@ -1,9 +1,9 @@
-import { nub } from "/util/nub";
+import { nub } from '/util/nub';
 
 type Route = Host[];
 
 export const getAllHostRoutes = (ns: NS) => {
-  return getNewRoutes(ns, [["home"]]);
+  return getNewRoutes(ns, [['home']]);
 };
 
 const getNewRoutes = (ns: NS, routes: Route[]): Route[] => {
@@ -11,7 +11,7 @@ const getNewRoutes = (ns: NS, routes: Route[]): Route[] => {
   const newRoutes = routes.flatMap((route) => {
     const newRoutes_ = ns
       .scan(route.at(-1))
-      .filter((server): server is Exclude<typeof server, Tera> => !server.startsWith("tera"))
+      .filter((server): server is Exclude<typeof server, Tera> => !server.startsWith('tera'))
       .filter((host) => !allHosts.includes(host));
     return newRoutes_.map((host) => [...route, host]);
   });

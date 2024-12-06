@@ -1,7 +1,7 @@
-import { HackStrategy } from "/lib/host/earnMoney/calcThreads";
-import { registerPort } from "/lib/port/registerPort";
-import { repeat } from "/util/repeat";
-import { filePath } from "/util/typedPath";
+import { HackStrategy } from '/lib/host/earnMoney/calcThreads';
+import { registerPort } from '/lib/port/registerPort';
+import { repeat } from '/util/repeat';
+import { filePath } from '/util/typedPath';
 
 export const gracefullyHack = async (ns: NS, host: Host, from: Host | Tera, hackStrategy: HackStrategy) => {
   const { hackThreads, growThreads: growThreads_, weakenThreads, weakenFrequency } = hackStrategy;
