@@ -1,8 +1,8 @@
-import * as bitburner from "./NetscriptDefinitions";
-
-export {};
+import * as bitburner from './NetscriptDefinitions';
 
 declare global {
+  export type CrimeType = bitburner.CrimeType | `${bitburner.CrimeType}`;
+  export type LocationName = bitburner.LocationName | `${bitburner.LocationName}`;
   interface NS extends bitburner.NS {
     getGrowTime(host: Host): number;
     getHackTime(host: Host): number;
