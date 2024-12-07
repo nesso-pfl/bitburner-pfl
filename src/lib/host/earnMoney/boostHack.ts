@@ -6,7 +6,7 @@ import { filePath } from '/util/typedPath';
 export const boostHack = async (ns: NS, host: Host, hackStrategy: HackStrategy) => {
   const { hackThreads, growThreads, weakenThreads } = hackStrategy;
   ns.tprint({ host, hackThreads, growThreads, weakenThreads });
-  const duration = ns.getHackTime(host) * 2 - 10;
+  const duration = ns.getHackTime(host) * 4 + 100;
   await repeat(
     ns,
     async () => {
