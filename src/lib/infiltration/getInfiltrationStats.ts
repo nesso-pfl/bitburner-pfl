@@ -1,4 +1,4 @@
-export type GetInfiltrationStatsReturn = {
+export type InfiltrationStats = {
   difficulty: number;
   location: string;
   probleams: number;
@@ -8,10 +8,7 @@ export type GetInfiltrationStatsReturn = {
   tradeRep: number;
 };
 
-export const getInfiltrationStats = (
-  ns: NS,
-  location: LocationName | `${LocationName}`,
-): GetInfiltrationStatsReturn => {
+export const getInfiltrationStats = (ns: NS, location: LocationName | `${LocationName}`): InfiltrationStats => {
   const infiltrationLocation = ns.infiltration.getInfiltration(location);
   return {
     difficulty: infiltrationLocation.difficulty,

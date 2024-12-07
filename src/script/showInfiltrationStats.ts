@@ -1,13 +1,11 @@
 import { tprintTable } from '/util/tprintTable';
-import { getInfiltrationStats } from '/lib/infiltration/getInfiltrationStats';
+import { getUsefulInfiltrations } from '/lib/infiltration/getUsefulInfiltrations';
 
 type Sort = 'sellCash' | 'tradeRep';
 
 export async function main(ns: NS): Promise<void> {
   const sort: Sort = 'sellCash';
-  const data = ns.infiltration
-    .getPossibleLocations()
-    .map((location) => getInfiltrationStats(ns, location.name))
+  const data = getUsefulInfiltrations(ns)
     .toSorted((a, b) => (a[sort] > b[sort] ? 1 : -1))
     .map((x) => ({
       ...x,
